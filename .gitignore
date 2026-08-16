@@ -1,0 +1,16 @@
+# Scraped / generated data — never committed (R3.7 / AC21)
+data/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Env
+.env
+
+# OS
+.DS_Store
