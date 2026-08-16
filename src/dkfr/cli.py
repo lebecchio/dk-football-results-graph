@@ -75,7 +75,9 @@ def validate() -> None:
 
 @app.command()
 def query(
-    name: str = typer.Argument(..., help="Query file name under queries/, e.g. u01-opponents."),
+    name: str = typer.Argument(
+        ..., help="Query file name under queries/, e.g. u01-opponents."
+    ),
     param: list[str] = typer.Option(
         [], "--param", help="key=value query parameter, repeatable."
     ),

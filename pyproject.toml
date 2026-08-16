@@ -40,6 +40,15 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+# UP042: prefer explicit `(str, Enum)` over `StrEnum` — pydantic v2 model_dump()
+# JSON serialization behaviour is more predictable/consistent with this pattern
+# across the whole vocab.py enum set, and it's a deliberate, uniform choice.
+ignore = ["UP042"]
+
+[tool.ruff.lint.per-file-ignores]
+# typer's idiomatic pattern is `param: T = typer.Option(...)` in the signature —
+# that's B008 by ruff's general rule, but it's how typer is meant to be used.
+"src/dkfr/cli.py" = ["B008"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
