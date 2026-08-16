@@ -11,8 +11,8 @@ Full background, research, and design rationale live in
 [`docs/specs/dk-results-scraper/design.md`](docs/specs/dk-results-scraper/design.md).
 This README covers only how to run it.
 
-**Status: in progress.** See the "Implementation status" section at the
-bottom for what's built and verified so far.
+**Status: T1-T16 implemented and verified against a real scrape.** See the
+"Implementation status" section at the bottom for the full account.
 
 ---
 
@@ -147,12 +147,35 @@ pages, to keep the test suite committable regardless of repo visibility.
 
 ---
 
+## Graph database
+
+`docs/schema/model.md` is the human-facing schema reference — label/
+relationship catalog, property tables, enum values, post-load invariants,
+and known limitations. It must stay in sync with `cypher/schema.cypher`,
+`cypher/validation.cypher`, `cypher/derive.cypher`, and `queries/*.cypher`.
+
+Neo4j Browser at http://localhost:7474 is the easiest way to explore the
+graph interactively once it's loaded; the `queries/*.cypher` files can be
+pasted directly into it, or run via `dkfr query <name> --param k=v`.
+
 ## Implementation status
 
-See the developer's final report for the authoritative status. As of the
-last update:
+All 16 tasks in the design's breakdown (T1-T16) are implemented and
+verified against a real scrape of the full 31-pulje manifest and a real
+local Docker Neo4j — see the developer's final report for the complete,
+task-by-task account of what was verified and how, and for the honestly-
+flagged known limitations (a handful of standings-reconciliation
+discrepancies with documented, evidenced explanations — see
+`docs/specs/dk-results-scraper/discovery-notes.md`'s T14 addendum).
 
-- **Phase A (foundation):** in progress.
-- **Phase B (extraction):** not started.
-- **Phase C (graph):** not started.
-- **Phase D (validation/hardening):** not started.
+- **Phase A (foundation):** done. Manifest has 31 real, verified pulje IDs
+  (`dkfr manifest verify`: 31/31 OK).
+- **Phase B (extraction):** done. Full parse of the real manifest: 2065
+  matches, 143 teams, 101 clubs, 139 venues, 256 standing rows.
+- **Phase C (graph):** done. Full load + validate + derive against the
+  real dataset: all post-load invariants pass, all graph/JSON counts
+  reconcile, all 11 query-set use cases (U1-U11) verified against real
+  data.
+- **Phase D (validation/hardening):** done. Standings reconciliation
+  (AC8) and an independent-source spot-check (AC9) both completed with
+  real, documented results.
