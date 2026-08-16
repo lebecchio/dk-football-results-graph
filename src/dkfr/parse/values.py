@@ -90,18 +90,28 @@ def parse_penalties(text: str | None) -> tuple[int, int] | None:
 
 # --- status ---
 
-# Confirmed markers per the design's anticipated vocabulary (spec R1);
-# NOT empirically observed in the T3 sample (season was 100% played through
-# in every sampled pulje — discovery-notes.md). Implemented defensively so
-# the full T6 fetch across ~31 puljer can exercise real examples if any
-# exist, and anything outside this vocabulary is reported (AC11), not
-# silently guessed.
+# The design's anticipated vocabulary (spec R1) PLUS two real markers found
+# empirically during T6's full-manifest fetch (not anticipated by the design
+# or the T3 sample — the season being "complete" per spec C13 doesn't mean
+# every scheduled match was actually played; a walkover produces no score
+# but the match itself is resolved, not merely "not played"):
+#   HHT = "Hjemmehold taberdømt" (home team declared the loser — a walkover
+#         against the home side, confirmed via the cell's data-tippy-content/
+#         title attribute on a real Herre-DS Oprykningsspil pulje).
+#   UHT = "Udehold taberdømt" (away team declared the loser — the mirror
+#         case, confirmed on an A-Liga Kvalifikationsspil pulje).
+# Both map to WALKOVER — the design already has that status; only the
+# marker vocabulary needed extending. See discovery-notes.md addendum.
 _STATUS_MARKERS: list[tuple[str, MatchStatus]] = [
     ("ikke afviklet", MatchStatus.NOT_PLAYED),
     ("udsat", MatchStatus.POSTPONED),
     ("afbrudt", MatchStatus.ABANDONED),
     ("annulleret", MatchStatus.ANNULLED),
     ("walkover", MatchStatus.WALKOVER),
+    ("hjemmehold taberdømt", MatchStatus.WALKOVER),
+    ("udehold taberdømt", MatchStatus.WALKOVER),
+    ("hht", MatchStatus.WALKOVER),
+    ("uht", MatchStatus.WALKOVER),
     ("wo", MatchStatus.WALKOVER),
 ]
 

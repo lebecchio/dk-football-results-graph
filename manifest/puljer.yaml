@@ -146,17 +146,17 @@ puljer:
     groupLabel: null
     pointsCarryOver: true
     expectedTeams: 6
-    expectedMatches: null
-    note: "Raekke 132093 -> pulje 498493. Bottom 6 from Grundspil; points carry over. Match count not yet confirmed against an independent source — left null per design OQ-6."
+    expectedMatches: 30
+    note: "Raekke 132093 -> pulje 498493. Bottom 6 from Grundspil; points carry over. Team/match counts confirmed empirically by T6's full fetch+parse (data/cache, not committed)."
 
   - puljeId: 503898
     competitionId: 3f-superliga
     phase: KVALIFIKATIONSSPIL
     groupLabel: "Europa Playoff"
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
-    note: "Raekke 133486 'Europa Playoff 2025/26' -> pulje 503898. NEW for 2025/26 (not mentioned in the spec's research) -- a European-qualification playoff, structurally closest to a knockout/kvalifikationsspil phase. Mapped to KVALIFIKATIONSSPIL with groupLabel 'Europa Playoff' to distinguish it from the relegation-side Kvalifikationsspil (498493) rather than adding a new enum value for one competition."
+    expectedTeams: 2
+    expectedMatches: 1
+    note: "Raekke 133486 'Europa Playoff 2025/26' -> pulje 503898. NEW for 2025/26 (not mentioned in the spec's research) -- a European-qualification playoff, structurally closest to a knockout/kvalifikationsspil phase. Mapped to KVALIFIKATIONSSPIL with groupLabel 'Europa Playoff' to distinguish it from the relegation-side Kvalifikationsspil (498493) rather than adding a new enum value for one competition. Confirmed via T6 fetch: a single 2-team, 1-match fixture with NO stillingFuld page at all (no 'Stilling' tab in its nav -- only Kampprogram/Opslagstavlen/Topscorerliste/Regler) -- the standings parser correctly reports this pulje's stillingFuld as a 'no <table> element' issue; that is expected, not a parser bug, and the loader/validation stages (T9+) must not treat every pulje as guaranteed to have a PARTICIPATED_IN-worthy standings source."
 
   # --- Betinia LIGA / 1. Division (tier 2, MEN_SENIOR) ---
   - puljeId: 473900
@@ -174,8 +174,8 @@ puljer:
     groupLabel: null
     pointsCarryOver: true
     expectedTeams: 6
-    expectedMatches: 10
-    note: "Raekke 132214 -> pulje 498884. Spec F2: 6-team promotion playoff, 10 further matches."
+    expectedMatches: 30
+    note: "Raekke 132214 -> pulje 498884. Spec F2 guessed '6-team promotion playoff, 10 further matches' -- CORRECTED after T6's full fetch+parse: the real kampprogramFuld has 30 matches, a full double round-robin among the 6 teams (6*5=30), not a 10-match partial format. The spec's guess is wrong; this manifest reflects the actually-scraped count."
 
   - puljeId: 498885
     competitionId: betinia-liga
@@ -183,8 +183,8 @@ puljer:
     groupLabel: null
     pointsCarryOver: true
     expectedTeams: 6
-    expectedMatches: 10
-    note: "Raekke 132215 -> pulje 498885. Spec F2: 6-team relegation playoff, 10 further matches. DBU labels this 'Kvalifikationsspil', not 'Nedrykningsspil' -- the design's NEDRYKNINGSSPIL enum value was not observed in real pulje titles anywhere in this manifest; kept reserved in vocab.py in case a future season uses it."
+    expectedMatches: 30
+    note: "Raekke 132215 -> pulje 498885. Same correction as 498884: real match count is 30 (6-team double round-robin), not the spec's guessed 10. DBU labels this 'Kvalifikationsspil', not 'Nedrykningsspil' -- the design's NEDRYKNINGSSPIL enum value was not observed in real pulje titles anywhere in this manifest; kept reserved in vocab.py in case a future season uses it."
 
   # --- CampoBet 2. Division (tier 3, MEN_SENIOR) ---
   - puljeId: 474114
@@ -201,17 +201,17 @@ puljer:
     phase: OPRYKNINGSSPIL
     groupLabel: null
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
-    note: "Raekke 132230 -> pulje 498951. Team count/match count not independently confirmed; left null."
+    expectedTeams: 6
+    expectedMatches: 30
+    note: "Raekke 132230 -> pulje 498951. Team/match counts confirmed empirically by T6's full fetch+parse (data/cache, not committed)."
 
   - puljeId: 498952
     competitionId: campobet-2-division
     phase: KVALIFIKATIONSSPIL
     groupLabel: null
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 6
+    expectedMatches: 30
     note: "Raekke 132231 -> pulje 498952."
 
   # --- CampoBet 3. Division (tier 4, MEN_SENIOR) ---
@@ -221,16 +221,16 @@ puljer:
     groupLabel: null
     pointsCarryOver: false
     expectedTeams: 12
-    expectedMatches: null
-    note: "Raekke 124248 -> pulje 474115. 12 clubs nationwide per spec F3; exact match count not independently confirmed, left null."
+    expectedMatches: 132
+    note: "Raekke 124248 -> pulje 474115. 12 clubs nationwide per spec F3; match count confirmed empirically by T6's full fetch+parse."
 
   - puljeId: 498953
     competitionId: campobet-3-division
     phase: OPRYKNINGSSPIL
     groupLabel: null
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 6
+    expectedMatches: 30
     note: "Raekke 132232 -> pulje 498953."
 
   - puljeId: 498954
@@ -238,8 +238,8 @@ puljer:
     phase: KVALIFIKATIONSSPIL
     groupLabel: null
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 6
+    expectedMatches: 30
     note: "Raekke 132233 -> pulje 498954."
 
   # --- Herre-DS / Danmarksserien (tier 5, MEN_SENIOR) — 4 parallel Grundspil groups ---
@@ -248,8 +248,8 @@ puljer:
     phase: GRUNDSPIL
     groupLabel: "Pulje 1"
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 90
     note: "Raekke 123996 -> multi-pulje page listing Pulje 1-4; this is Pulje 1 (row order on the Raekke page)."
 
   - puljeId: 473827
@@ -257,8 +257,8 @@ puljer:
     phase: GRUNDSPIL
     groupLabel: "Pulje 2"
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 90
     note: "Raekke 123996, Pulje 2."
 
   - puljeId: 473828
@@ -266,8 +266,8 @@ puljer:
     phase: GRUNDSPIL
     groupLabel: "Pulje 3"
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 90
     note: "Raekke 123996, Pulje 3."
 
   - puljeId: 473829
@@ -284,8 +284,8 @@ puljer:
     phase: OPRYKNINGSSPIL
     groupLabel: "Pulje 1"
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 50
     note: "Raekke 123997 'Herre-DS 2025-26 Oprykningsspil' -> multi-pulje page with 2 puljer. Confirmed via `manifest verify`: real title is 'Herre-DS 2025-26 Oprykningsspil, Pulje 1 (2026)'."
 
   - puljeId: 473831
@@ -293,8 +293,8 @@ puljer:
     phase: OPRYKNINGSSPIL
     groupLabel: "Pulje 2"
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 50
     note: "Raekke 123997, second Oprykningsspil pulje. Confirmed via `manifest verify`: real title is 'Herre-DS 2025-26 Oprykningsspil, Pulje 2 (2026)'."
 
   - puljeId: 473832
@@ -302,8 +302,8 @@ puljer:
     phase: KVALIFIKATIONSSPIL
     groupLabel: "Pulje 1"
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 50
     note: "Raekke 123998 'Herre-DS 2025-26 Kvalifikationsspil' -> multi-pulje page with 2 puljer. Confirmed via `manifest verify`: real title is 'Herre-DS 2025-26 Kvalifikationsspil, Pulje 1 (2026)'."
 
   - puljeId: 473833
@@ -311,8 +311,8 @@ puljer:
     phase: KVALIFIKATIONSSPIL
     groupLabel: "Pulje 2"
     pointsCarryOver: true
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 10
+    expectedMatches: 50
     note: "Raekke 123998, second Kvalifikationsspil pulje. Confirmed via `manifest verify`: real title is 'Herre-DS 2025-26 Kvalifikationsspil, Pulje 2 (2026)'."
 
   - puljeId: 473834
@@ -321,8 +321,8 @@ puljer:
     groupLabel: "Oprykningskampe fra DS"
     nameOverride: "Oprykningskampe fra DS"
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 2
+    expectedMatches: 2
     note: "Raekke 123999 'Oprykningskampe fra DS' -> pulje 473834. Cross-tier promotion playoff between Herre-DS and 3. Division (spec F3 mentions 3 clubs promoted DS->3.Division each season). Included because it's the single most valuable pulje in the whole manifest for U6 (degrees of separation across tiers) and costs nothing extra to add -- it was already resolved by the raekkesoeg walk. Mapped to KVALIFIKATIONSSPIL (closest existing enum value for a cross-group qualification playoff) with a descriptive groupLabel rather than inventing a new phase enum value for one pulje. nameOverride set because the real page title is literally 'Oprykningskampe fra DS (2026)' -- it does not contain the string 'Herre-DS' at all."
 
   # --- U19 Drenge Ligaen (tier 1, MEN_U19) ---
@@ -341,9 +341,9 @@ puljer:
     phase: SINGLE
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
-    note: "Raekke 124039 -> pulje 473922. Matches spec F4's cited ID exactly. Not directly fetched during T3 (only its Raekke redirect was confirmed); team/match counts to be filled once T6 fetches it."
+    expectedTeams: 14
+    expectedMatches: 182
+    note: "Raekke 124039 -> pulje 473922. Matches spec F4's cited ID exactly. Team/match counts confirmed empirically by T6's full fetch+parse (data/cache, not committed)."
 
   # --- A-Liga (tier 1, WOMEN_SENIOR) ---
   - puljeId: 474240
@@ -361,7 +361,7 @@ puljer:
     groupLabel: null
     pointsCarryOver: true
     expectedTeams: 6
-    expectedMatches: null
+    expectedMatches: 30
     note: "Raekke 129873 'A-Liga Mesterskabsspil' -> pulje 492097. Spec F2: 6-team championship play-off, scores carry over."
 
   - puljeId: 492098
@@ -369,8 +369,8 @@ puljer:
     phase: KVALIFIKATIONSSPIL
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 6
+    expectedMatches: 30
     note: "Raekke 129874 'A-Liga Kvalifikationsspil' -> pulje 492098. Spec F2: qualification play-off against B-Liga's top 4."
 
   # --- B-Liga (tier 2, WOMEN_SENIOR) ---
@@ -379,8 +379,8 @@ puljer:
     phase: GRUNDSPIL
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 8
+    expectedMatches: 56
     note: "Raekke 124350 -> pulje 474287."
 
   - puljeId: 492094
@@ -388,8 +388,8 @@ puljer:
     phase: KVALIFIKATIONSSPIL
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 6
+    expectedMatches: 30
     note: "Raekke 129871 'B-Liga Kvalifikationsspil' -> pulje 492094. The A-Liga/B-Liga qualification play-off (spec F2) -- same competition as 492098 from B-Liga's side; both are kept as separate manifest entries since they are separate puljeIds/URLs, matching the pulje-is-the-scrape-unit finding (spec F1)."
 
   # --- U19 Piger Liga (tier 1, WOMEN_U19) ---
@@ -398,8 +398,8 @@ puljer:
     phase: SINGLE
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 8
+    expectedMatches: 84
     note: "Raekke 124358 -> pulje 474402. Matches spec F4's cited ID exactly."
 
   # --- U16 Piger Liga (tier 1, WOMEN_U16) ---
@@ -408,6 +408,6 @@ puljer:
     phase: SINGLE
     groupLabel: null
     pointsCarryOver: false
-    expectedTeams: null
-    expectedMatches: null
+    expectedTeams: 8
+    expectedMatches: 84
     note: "Raekke 124392 -> pulje 474479. IMPORTANT CORRECTION to the spec: F4 cites pulje 474480 as the U16 Piger pulje, but 474480 is actually 'U16 Piger Division' (the second, out-of-scope tier -- Raekke 124393). Confirmed empirically in T3 by fetching 474479/stillingFuld and reading its title: 'U16 Piger Liga 2025/26 (2026)'. See docs/specs/dk-results-scraper/discovery-notes.md Finding 0a."

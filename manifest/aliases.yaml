@@ -1,0 +1,25 @@
+# manifest/aliases.yaml — raw team display name -> canonical name (+
+# optional clubId/dbuTeamId), per design Decision 3 / spec AC10.
+#
+# In THIS dataset, team identity resolution turned out not to need this
+# file: Q6 (docs/specs/dk-results-scraper/discovery-notes.md) confirmed the
+# DBU numeric team ID is stable across puljer, AND that ID is present
+# directly on every kampprogramFuld fixture row's team-cell link — so
+# TeamResolver.resolve_team() (src/dkfr/normalize/resolver.py) resolves
+# every real team in the 31-pulje manifest via `dbu:<numericTeamId>`
+# without ever falling back to name-based matching. `dkfr names review`
+# found zero unresolved names against the full T6 fetch.
+#
+# This file exists as the documented fallback for the case a future pulje
+# (or a row within one) is missing its team link — TeamResolver's fallback
+# branch writes an UnresolvedName entry to data/reports/unresolved-names.json
+# when that happens, and a human promotes the fix into this file.
+#
+# Format:
+# aliases:
+#   "<raw name as rendered on a fixture row>":
+#     canonicalName: "<name to display>"
+#     dbuTeamId: "<numeric id, if known independently>"     # optional
+#     clubId: "<override clubId>"                             # optional
+
+aliases: {}

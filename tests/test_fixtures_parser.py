@@ -99,6 +99,28 @@ def test_penalty_badge_on_home_side_digit_after_badge():
     assert m.status == MatchStatus.PLAYED
 
 
+def test_walkover_markers_hht_uht():
+    """Regression test for the real HHT/UHT walkover markers found during T6's
+    full-manifest fetch (docs/specs/dk-results-scraper/discovery-notes.md
+    addendum) — a result-cell shape with no home-score/away-score divs at
+    all, just a .sr--match-program--match-state text marker."""
+    html = _load("kampprogram_walkover.html")
+    matches, issues = parse_fixtures(html, "https://example.test/walkover")
+
+    assert issues == []
+    assert len(matches) == 2
+
+    hht = matches[0]
+    assert hht.status == MatchStatus.WALKOVER
+    assert hht.homeGoals is None
+    assert hht.awayGoals is None
+
+    uht = matches[1]
+    assert uht.status == MatchStatus.WALKOVER
+    assert uht.homeGoals is None
+    assert uht.awayGoals is None
+
+
 def test_no_table_produces_error_issue():
     matches, issues = parse_fixtures("<html><body>no table here</body></html>", "https://x")
     assert matches == []

@@ -106,6 +106,13 @@ def test_parse_status_not_played_empty():
         ("Ikke afviklet", MatchStatus.NOT_PLAYED),
         ("Walkover", MatchStatus.WALKOVER),
         ("WO", MatchStatus.WALKOVER),
+        # HHT/UHT found empirically during T6's full-manifest fetch (not
+        # anticipated by the design or the T3 sample) — see
+        # discovery-notes.md addendum and parse/values.py's marker comment.
+        ("HHT", MatchStatus.WALKOVER),
+        ("UHT", MatchStatus.WALKOVER),
+        ("Hjemmehold taberdømt", MatchStatus.WALKOVER),
+        ("Udehold taberdømt", MatchStatus.WALKOVER),
     ],
 )
 def test_parse_status_known_markers(text, expected_status):

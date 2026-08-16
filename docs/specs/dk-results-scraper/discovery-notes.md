@@ -379,3 +379,44 @@ it's explicit rather than an oversight waiting to happen in T6.
 7. **U16 Piger manifest entry is pulje `474479` ("Liga"), NOT `474480` ("Division") as the spec's F4 citation would suggest** — corrected for T4.
 8. **The `raekkesoeg`/`Raekke` redirect mechanism is the primary discovery tool for T4's manifest curation**, not manual browser navigation — it is robots-permitted, mechanical, and cross-validated against every spec-cited pulje ID in this sample.
 9. **`parse/teams.py` must never extract the coach field from `holdoversigt`.**
+
+---
+
+## Addendum (T6) — real status markers found on the full 31-pulje fetch
+
+Item 5 above ("status vocabulary is unverified") was resolved once T6 fetched
+every manifest pulje's `kampprogramFuld` (not just the 6-pulje T3 sample).
+Two markers appear, in a `<div class="sr--match-program--match-state"
+data-tippy-content="...">` element (a different structure from the normal
+`.sr--match-program--score-container` — no home-score/away-score divs at
+all when this marker is present):
+
+- **`HHT`** (`data-tippy-content="Hjemmehold taberdømt"`, "home team declared
+  the loser") — a walkover against the home side. Confirmed on Herre-DS
+  Oprykningsspil pulje `473830` and Grundspil pulje `473827`.
+- **`UHT`** (`data-tippy-content="Udehold taberdømt"`, "away team declared
+  the loser") — the mirror case. Confirmed on A-Liga Kvalifikationsspil
+  pulje `492098`.
+
+Both map to `MatchStatus.WALKOVER` — the design's enum already anticipated a
+walkover status, only the marker vocabulary needed extending
+(`parse/values.py`'s `_STATUS_MARKERS`). No other unrecognized marker turned
+up across all 2065 matches in the 31-pulje manifest — the parse-issues count
+went from 4 errors (before this fix) to 1 (the expected `503898` no-standings-
+table case, see below), confirming the fix was complete for this dataset.
+
+**Also confirmed via the full fetch: two real bugs in the initial parser
+implementation, both fixed and covered by regression tests** (see the T6
+commit for detail) — a fixed-offset-from-the-end column extractor
+misreading Superliga's extra "TV" broadcaster column, and a penalty-badge
+text-extraction bug when the badge is nested before (rather than after) the
+actual goal-count digit in DOM order.
+
+**One pulje, `503898` (Superliga "Europa Playoff"), has no `stillingFuld`
+page at all** — its own navigation only offers Kampprogram/Opslagstavlen/
+Topscorerliste/Regler, no "Stilling" tab. It's a single 2-team, 1-match
+fixture; a standings table wouldn't be meaningful for it. This is a real,
+page-level absence of data, not a parser bug — `parse/standings.py`
+correctly reports it as an issue, and the manifest's note on this entry
+documents it explicitly so downstream stages (loader/validation) don't
+treat every pulje as guaranteed to have standings.

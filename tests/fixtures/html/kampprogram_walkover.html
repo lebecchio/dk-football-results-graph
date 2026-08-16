@@ -1,0 +1,43 @@
+<!--
+Synthetic fixture reproducing the HHT/UHT walkover marker structure found
+during T6's full-manifest fetch (docs/specs/dk-results-scraper/discovery-notes.md
+addendum). NOT real DBU content. Note this cell has NO home-score/away-score
+divs at all -- a structurally different result-cell shape from a played match.
+-->
+<html>
+<body>
+<table>
+  <thead class="hide-on-mobile">
+    <tr><th></th><th>Kampnr</th><th>Dato</th><th>Tid</th><th>Hjemme</th><th>Ude</th><th>Spillested</th><th class="center-col">Resultat</th></tr>
+  </thead>
+  <tbody>
+    <tr class="odd has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/400001_999006/kampinfo')">
+      <td class="hide-on-mobile"></td>
+      <td class="hide-on-mobile">400001</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>fre.</span> 05-06 2026</div></td>
+      <td class="hide-on-mobile">19:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/4001_999006">Test Home Withdrew FC</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/4002_999006">Test Away FC</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/5">Test Stadion</a></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--match-state has-tooltip" data-tippy-content="Hjemmehold taberdømt" title="Hjemmehold taberdømt">HHT</div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE</td>
+    </tr>
+    <tr class="even has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/400002_999006/kampinfo')">
+      <td class="hide-on-mobile"></td>
+      <td class="hide-on-mobile">400002</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>l&oslash;r.</span> 06-06 2026</div></td>
+      <td class="hide-on-mobile">15:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/4003_999006">Test Home FC</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/4004_999006">Test Away Withdrew FC</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/6">Test Stadion 2</a></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--match-state has-tooltip" data-tippy-content="Udehold taberdømt" title="Udehold taberdømt">UHT</div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
