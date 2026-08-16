@@ -80,11 +80,15 @@ class Settings(BaseSettings):
 
     # --- Source ---
     base_url: str = "https://www.dbu.dk"
-    allowed_path_prefixes: tuple[str, ...] = (
-        "/resultater/pulje/",
-        "/resultater/raekke/",
-        "/resultater/Raekke/",
-    )
+    # Everything under /resultater/ is fetchable EXCEPT the two robots-disallowed
+    # subpaths (checked separately, defense-in-depth, by RobotsChecker — see
+    # fetch/robots.py). Spec F5 confirms pulje/kamp/klub/raekke/hold are all
+    # not disallowed; the bare /resultater/ landing page isn't in the Disallow
+    # list either. This is deliberately broad rather than pulje-only, because T3
+    # (discovery) also needs the /resultater/raekke/ page and the landing page —
+    # no image/asset paths live under /resultater/ in the first place, so this
+    # does not weaken R2.8 (no logos/assets, ever).
+    allowed_path_prefixes: tuple[str, ...] = ("/resultater/",)
     disallowed_path_prefixes: tuple[str, ...] = (
         "/resultater/kampsoegAdvanceret/",
         "/turneringer_og_resultater/resultatsoegning/",
