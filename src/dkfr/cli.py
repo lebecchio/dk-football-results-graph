@@ -60,9 +60,9 @@ def load(
 @app.command()
 def derive() -> None:
     """Rebuild the derived PLAYED_AGAINST projection (drop-and-rebuild, idempotent)."""
-    from dkfr.commands.derive_cmd import run_derive
+    from dkfr.commands.derive_cmd import run_derive_cmd
 
-    run_derive(console=console)
+    run_derive_cmd(console=console)
 
 
 @app.command()
