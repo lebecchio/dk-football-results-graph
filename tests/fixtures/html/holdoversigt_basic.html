@@ -1,0 +1,27 @@
+<!--
+Synthetic fixture reproducing the confirmed holdoversigt structure
+(docs/specs/dk-results-scraper/discovery-notes.md). NOT real DBU content.
+Deliberately includes a coach field to prove parse/teams.py never reads it
+(spec C6/N4).
+-->
+<html>
+<body>
+<section>
+<div class="sr--pool--team-list">
+  <div class="sr--pool--team-list--team" onclick="window.location.href = '/resultater/hold/9001_999005/'">
+    <div class="sr--pool--team-list--team--name"><h3>Test Top FC</h3></div>
+    <div class="sr--pool--team-list--team--stadium"><h4>Spillested</h4>Test Arena (boldbaner)</div>
+    <div class="sr--pool--team-list--team--coach">
+      <div class="coaches">
+        <div class="coach"><h4>Chef&#xE6;ner</h4><span>Should Never Be Extracted</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="sr--pool--team-list--team" onclick="window.location.href = '/resultater/hold/9002_999005/'">
+    <div class="sr--pool--team-list--team--name"><h3>Test Bottom FC</h3></div>
+    <div class="sr--pool--team-list--team--stadium"><h4>Spillested</h4>Another Ground</div>
+  </div>
+</div>
+</section>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!--
+Synthetic fixture reproducing penalty-shootout markup in BOTH observed
+positions: badge nested inside away-score (design's originally-sampled
+case) and badge nested inside home-score with the digit text node AFTER
+the badge div (found during T6 — see discovery-notes.md and the
+direct_text() fix in parse/tables.py). NOT real DBU content.
+-->
+<html>
+<body>
+<table>
+  <thead class="hide-on-mobile">
+    <tr>
+      <th></th><th>Kampnr</th><th>Dato</th><th>Tid</th><th>Hjemme</th><th>Ude</th><th>Spillested</th><th class="center-col">Resultat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- penalty badge on the AWAY side, digit text node BEFORE the badge -->
+    <tr class="odd has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/300001_999003/kampinfo')">
+      <td class="hide-on-mobile"><a href="/resultater/kamp/300001_999003/kampinfo"><img class="match_indicator" src="/x.png"/></a></td>
+      <td class="hide-on-mobile">300001</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>fre.</span> 15-08 2025</div></td>
+      <td class="hide-on-mobile">15:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/3001_999003">Vejle</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/3002_999003">FC K&oslash;benhavn</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/3">VB Parken</a></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--score-container">
+          <div class="home-score">2</div>
+          <div>-</div>
+          <div class="away-score">2<div class="penalty-result-badge _away"><img src="/penalty.png"/><div class="tool-tip">Straffesparkskonkurrence<br/>4 - 5</div></div></div>
+        </div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE</td>
+    </tr>
+    <!-- penalty badge on the HOME side, digit text node AFTER the badge -->
+    <tr class="even has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/300002_999003/kampinfo')">
+      <td class="hide-on-mobile"><a href="/resultater/kamp/300002_999003/kampinfo"><img class="match_indicator" src="/x.png"/></a></td>
+      <td class="hide-on-mobile">300002</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>l&oslash;r.</span> 16-08 2025</div></td>
+      <td class="hide-on-mobile">12:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/3003_999003">AaB</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/3004_999003">Silkeborg</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/4">Aalborg Portland Park</a></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--score-container">
+          <div class="home-score"><div class="penalty-result-badge _home"><img src="/penalty.png"/><div class="tool-tip">Straffesparkskonkurrence<br/>4 - 2</div></div>1</div>
+          <div>-</div>
+          <div class="away-score">1</div>
+        </div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!--
+Synthetic fixture reproducing the observed kampprogramFuld structure
+(docs/specs/dk-results-scraper/discovery-notes.md). NOT real DBU content —
+hand-authored to exercise: a normal played match, an unplayed/no-score
+match, a missing-venue match, and an ad placeholder row that must be
+skipped without generating a parse issue.
+-->
+<html>
+<body>
+<table>
+  <thead class="hide-on-mobile">
+    <tr>
+      <th></th>
+      <th>Kampnr</th>
+      <th>Dato</th>
+      <th>Tid</th>
+      <th>Hjemme</th>
+      <th>Ude</th>
+      <th>Spillested</th>
+      <th class="center-col">Resultat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/100001_999001/kampinfo')">
+      <td class="hide-on-mobile"><a href="/resultater/kamp/100001_999001/kampinfo"><img class="match_indicator" src="/x.png"/></a></td>
+      <td class="hide-on-mobile">100001</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>lør.</span> 09-08 2025</div></td>
+      <td class="hide-on-mobile">13:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/1001_999001">Test FC A</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/1002_999001">Test FC B</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/1">Test Arena</a></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--score-container">
+          <div class="home-score">4</div>
+          <div>-</div>
+          <div class="away-score">2</div>
+        </div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE 4 Test FC A Test FC B 2</td>
+    </tr>
+    <tr class="adtr tr_mob tr_mob3" data-print="false">
+      <td colspan="20"><div class="ad--container">ad</div></td>
+    </tr>
+    <tr class="even has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/100002_999001/kampinfo')">
+      <td class="hide-on-mobile"><a href="/resultater/kamp/100002_999001/kampinfo"><img class="match_indicator" src="/x.png"/></a></td>
+      <td class="hide-on-mobile">100002</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>søn.</span> 10-08 2025</div></td>
+      <td class="hide-on-mobile"></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/1003_999001">Test FC C</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/1004_999001">Test FC D</a></div></td>
+      <td class="hide-on-mobile"></td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--score-container"></div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE not played</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

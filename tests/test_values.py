@@ -155,6 +155,20 @@ def test_parse_danish_date_unparseable_returns_none():
     assert parse_danish_date(None) is None
 
 
+def test_parse_danish_date_four_letter_abbreviations():
+    # DBU is inconsistent: T6's full-manifest fetch found "tirs." and "tors."
+    # (4-letter) alongside "tir."/"tor." (3-letter) in the SAME pulje.
+    result = parse_danish_date("tirs. 26-08 2025")
+    assert result is not None
+    assert result.date == date(2025, 8, 26)
+    assert result.weekday_mismatch is False  # 2025-08-26 is a Tuesday
+
+    result = parse_danish_date("tors. 25-09 2025")
+    assert result is not None
+    assert result.date == date(2025, 9, 25)
+    assert result.weekday_mismatch is False  # 2025-09-25 is a Thursday
+
+
 def test_parse_danish_date_all_weekday_abbreviations():
     # man/tir/ons/tor/fre/lør/søn map to a real week (2025-08-04 is a Monday)
     days = ["man", "tir", "ons", "tor", "fre", "lør", "søn"]

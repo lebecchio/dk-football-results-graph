@@ -141,9 +141,14 @@ _WEEKDAY_MAP = {
 }
 
 # "lør.09-08 2025" — weekday abbrev + "." + DD-MM + " " + YYYY (confirmed
-# format, discovery-notes.md).
+# format, discovery-notes.md). DBU is NOT consistent about abbreviation
+# length: T6's full-manifest fetch found both "tir." AND "tirs." for
+# Tuesday, and both "tor." AND "tors." for Thursday, in the same pulje
+# (Herre-DS Pulje 4) that the shorter forms were sampled from during T3.
+# The weekday group therefore matches 3-5 letters and is resolved by
+# checking known 3-letter prefixes, not by an exact/fixed-length match.
 _DATE_RE = re.compile(
-    r"^\s*(?P<weekday>man|tir|ons|tor|fre|lør|søn)\.\s*"
+    r"^\s*(?P<weekday>[a-zæøå]{3,5})\.\s*"
     r"(?P<day>\d{2})-(?P<month>\d{2})\s+(?P<year>\d{4})\s*$",
     re.IGNORECASE,
 )
@@ -176,7 +181,17 @@ def parse_danish_date(text: str | None) -> DateParseResult | None:
         parsed_date = date(year, month, day)
     except ValueError:
         return None
-    stated_weekday = _WEEKDAY_MAP[m.group("weekday").lower()]
+
+    weekday_text = m.group("weekday").lower()
+    stated_weekday = next(
+        (wd for prefix, wd in _WEEKDAY_MAP.items() if weekday_text.startswith(prefix)), None
+    )
+    if stated_weekday is None:
+        # Unrecognized weekday token — still return the date (it parsed fine),
+        # but treat it as a mismatch so the caller surfaces a warning rather
+        # than silently trusting an abbreviation outside the known set.
+        return DateParseResult(date=parsed_date, weekday_mismatch=True)
+
     mismatch = parsed_date.weekday() != stated_weekday
     return DateParseResult(date=parsed_date, weekday_mismatch=mismatch)
 

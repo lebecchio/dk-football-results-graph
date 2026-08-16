@@ -1,0 +1,45 @@
+<!--
+Synthetic fixture reproducing a pulje with the extra "TV" broadcaster column
+between Spillested and Resultat (observed on 3F Superliga puljer — see
+discovery-notes.md and the T6 fixtures.py header-index-map fix). NOT real
+DBU content.
+-->
+<html>
+<body>
+<table>
+  <thead class="hide-on-mobile">
+    <tr>
+      <th></th>
+      <th>Kampnr</th>
+      <th>Dato</th>
+      <th>Tid</th>
+      <th>Hjemme</th>
+      <th>Ude</th>
+      <th>Spillested</th>
+      <th>TV</th>
+      <th class="center-col">Resultat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd has-hover" onclick="MatchProgramMatchClick('/resultater/kamp/200001_999002/kampinfo')">
+      <td class="hide-on-mobile"><a href="/resultater/kamp/200001_999002/kampinfo"><img class="match_indicator" src="/x.png"/></a></td>
+      <td class="hide-on-mobile">200001</td>
+      <td class="hide-on-mobile"><div class="matchprogram-date"><span>fre.</span> 18-07 2025</div></td>
+      <td class="hide-on-mobile">19:00</td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/2001_999002">Viborg</a></div></td>
+      <td class="hide-on-mobile"><div class="name-logo-remarks"><a class="link bold-text" href="/resultater/hold/2002_999002">F.C. K&oslash;benhavn</a></div></td>
+      <td class="hide-on-mobile"><a class="link" href="/resultater/stadium/2">Energi Viborg Arena</a></td>
+      <td class="hide-on-mobile">TV3 Sport</td>
+      <td class="result-col hide-on-mobile">
+        <div class="sr--match-program--score-container">
+          <div class="home-score">2</div>
+          <div>-</div>
+          <div class="away-score">3</div>
+        </div>
+      </td>
+      <td class="only-on-mobile">MOBILE DUPLICATE 2 Viborg FCK 3</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
