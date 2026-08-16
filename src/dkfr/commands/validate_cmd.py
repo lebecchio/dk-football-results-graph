@@ -9,7 +9,9 @@ from rich.table import Table
 
 from dkfr.config import get_settings
 from dkfr.load.driver import build_driver
+from dkfr.load.reconcile import reconcile_all
 from dkfr.load.validate import reconcile_counts, run_validation
+from dkfr.manifest import load_manifest
 
 
 def run_validate(*, console: Console) -> None:
@@ -45,6 +47,27 @@ def run_validate(*, console: Console) -> None:
                 recon_failed = True
             recon_table.add_row(key, str(row["expected"]), str(row["actual"]), status)
         console.print(recon_table)
+
+        manifest = load_manifest(settings.puljer_manifest_path)
+        standings_results = reconcile_all(driver, manifest)
+        compared = [r for r in standings_results if r.compared]
+        clean = [r for r in compared if r.passed]
+        console.print(
+            f"\nStandings reconciliation (AC8): {len(clean)}/{len(compared)} non-carry-over "
+            f"puljer reconcile exactly ({len(standings_results) - len(compared)} carry-over "
+            "puljer skipped, reported separately)."
+        )
+
+        settings.reports_dir.mkdir(parents=True, exist_ok=True)
+        standings_report_path = settings.reports_dir / "standings-reconciliation.json"
+        standings_report_path.write_text(
+            json.dumps(
+                [r.model_dump() for r in standings_results], indent=2, sort_keys=True, default=str
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+        console.print(f"Wrote {standings_report_path}")
 
         settings.reports_dir.mkdir(parents=True, exist_ok=True)
         report_path = settings.reports_dir / "validation.json"

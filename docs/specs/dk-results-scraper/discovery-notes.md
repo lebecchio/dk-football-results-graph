@@ -420,3 +420,63 @@ page-level absence of data, not a parser bug — `parse/standings.py`
 correctly reports it as an issue, and the manifest's note on this entry
 documents it explicitly so downstream stages (loader/validation) don't
 treat every pulje as guaranteed to have standings.
+
+---
+
+## Addendum (T14) — AC8/AC9 findings
+
+**AC8 (standings reconciliation, `src/dkfr/load/reconcile.py`):** running
+U10-style derived standings against every manifest pulje's scraped
+`PARTICIPATED_IN` data (not just the design's suggested 5) found **9
+puljer that reconcile with zero mismatches** on played/won/drawn/lost/GF/
+GA/points, spanning MEN_SENIOR tiers 1/2/5 and WOMEN_SENIOR tiers 1/2 —
+comfortably over AC8's "at least 5, spanning different tiers/brackets."
+
+Two real, evidenced explanations were found for the puljer that DON'T
+reconcile exactly:
+
+1. **The design's R-3 assumption ("only points carries over") is wrong —
+   corrected.** For `pointsCarryOver: true` puljer (Mesterskabsspil/
+   Oprykningsspil/Kvalifikationsspil phases), DBU's `stillingFuld` shows
+   the team's **cumulative season-to-date total on every column**, not
+   just points — e.g. a Superliga Mesterskabsspil team's scraped `played`
+   is 32 (22 Grundspil + 10 Mesterskabsspil), not 10. A column-by-column
+   comparison against just that pulje's own matches isn't meaningful for
+   any column in this case, not only points. `reconcile.py` now skips
+   these puljer entirely (reported separately, `compared: false`) rather
+   than attempting and failing a comparison the design's original framing
+   would have gotten wrong on played/GF/GA too.
+2. **A likely penalty-shootout bonus-points scheme, found on non-carry-
+   over puljer.** U19 Drenge Ligaen (pulje 473921): every mismatch is
+   points-only (played/won/drawn/lost/goals all match exactly), and the
+   size of each team's deficit correlates exactly with their count of WON
+   penalty shootouts (verified directly: AC Horsens, 1 shootout win,
+   1-point deficit). This strongly suggests DBU awards a bonus point for
+   a penalty-shootout win beyond the standard 1-point draw — a scoring
+   rule this pipeline's points formula (3/1/0 by W/D/L only, Decision 2)
+   doesn't model. **Not auto-corrected** — the exact scheme isn't
+   confirmed for every affected bracket (some, like `474114`/`474115`,
+   have zero penalty-shootout matches at all and a real points
+   discrepancy with no shootout-related explanation, so an administrative
+   points adjustment invisible to a match-results scraper is also
+   plausible there). Flagged in the reconciliation report for human
+   review rather than guessed at.
+
+**AC9 (independent-source spot-check):** fetched
+`https://en.wikipedia.org/wiki/2025–26_Danish_Superliga` (external site,
+not subject to dbu.dk's robots/politeness rules) and cross-checked its
+Grundspil results matrix against the scraped `matches.jsonl` for pulje
+`473806`. **25/26 sampled results matched exactly** (20 via an
+independent random sample using the grid's row-name/column-abbreviation
+mapping, plus 6 from an initial manual spot-check). The one discrepancy
+(Brøndby vs Copenhagen) is attributable to what strong evidence indicates
+is a Wikipedia data-entry error, not a scraper defect: Wikipedia's grid
+shows **the same score, "1–0", in BOTH directions** of that pairing
+(Brøndby-home-vs-Copenhagen and Copenhagen-home-vs-Brøndby) — which is not
+how a double round-robin table should render two independently-played
+legs. The scraped data shows two different, plausible results for the two
+legs (2–1 and 1–0), and this exact pulje is one of the 9 that reconciles
+with **zero** mismatches against DBU's own independently-rendered
+`stillingFuld` standings table — a second, internally-consistent source
+that corroborates the scraped fixtures over the Wikipedia grid for this
+one cell.
